@@ -33,7 +33,7 @@ public class KartverketConsumer {
                 .bodyToMono(FylkesnavnResponse.class)
                 .onErrorResume(WebClientResponseException.class, ex -> {
                     if (ex.getStatusCode() == HttpStatus.NOT_FOUND) {
-                        return Mono.error(new RuntimeException("Ugyldig fylkesnummer " + countyNumber));
+                        return Mono.error(new CountyNotFoundException("Ugyldig fylkesnummer " + countyNumber));
                     }
                     return Mono.error(new RuntimeException("Kartverket API feilet", ex));
                 })

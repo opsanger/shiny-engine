@@ -1,8 +1,8 @@
 package com.klp.interview.service;
 
 import com.klp.interview.model.UserSpec;
-import com.klp.interview.repository.UserEntity;
 import com.klp.interview.model.UserType;
+import com.klp.interview.repository.UserEntity;
 import com.klp.interview.repository.UserRepository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -26,21 +26,21 @@ public class UserService {
         return userRepoitory.save(user);
     }
 
-    public List<UserEntity> findUsers(String id, String email, String type) {
+    public List<UserEntity> findUsers(String id, String email, UserType type) {
         Specification<UserEntity> spec = getUserSpec(id, email, type);
         return userRepoitory.findAll(spec);
     }
 
-    private Specification<UserEntity> getUserSpec(String id, String email, String type) {
+    private Specification<UserEntity> getUserSpec(String id, String email, UserType type) {
         Specification<UserEntity> specification = Specification.where(null);
-        if(id != null) {
+        if (id != null) {
             specification = specification.and(UserSpec.hasId(Long.valueOf(id)));
         }
-        if(email != null) {
+        if (email != null) {
             specification = specification.and(UserSpec.hasEmail(email));
         }
-        if(type != null) {
-            specification = specification.and(UserSpec.hasType(UserType.valueOf(type)));
+        if (type != null) {
+            specification = specification.and(UserSpec.hasType(type));
         }
 
         return specification;
